@@ -1,0 +1,23 @@
+@startuml
+package simpleFactory{
+interface IMobile{
+call()
+}
+class XiaoMi {
+call()
+}
+class HuaWei {
+call()
+}
+
+class MobileFactory{
+produce()
+}
+
+IMobile <|--  XiaoMi
+IMobile <|--  HuaWei
+IMobile <... MobileFactory
+XiaoMi <-- MobileFactory:create
+HuaWei <-- MobileFactory:create
+}
+@enduml

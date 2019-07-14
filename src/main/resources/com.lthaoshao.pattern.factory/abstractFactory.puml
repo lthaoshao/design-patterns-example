@@ -1,0 +1,51 @@
+@startuml
+package abstractFactory{
+interface DeviceFactory{
+producePad()
+produceWatch()
+}
+interface Pad{
+vedio()
+}
+interface Watch{
+count()
+}
+
+class XiaoMiFactory{
+producePad()
+produceWatch()
+}
+class HuaWeiFactory{
+producePad()
+produceWatch()
+}
+class XiaoMiPad{
+vedio()
+}
+class XiaoMiWatch{
+ count()
+ }
+class HuaWeiPad{
+vedio()
+}
+class HuaWeiWatch{
+count()
+}
+
+
+DeviceFactory <|-- XiaoMiFactory
+DeviceFactory <|-- HuaWeiFactory
+
+Pad <|-- XiaoMiPad
+Pad <|-- HuaWeiPad
+
+Watch <|--- XiaoMiWatch
+Watch <|--- HuaWeiWatch
+
+HuaWeiPad <-- HuaWeiFactory:create
+HuaWeiWatch <-- HuaWeiFactory:create
+
+XiaoMiPad <-- XiaoMiFactory:create
+XiaoMiWatch<-- XiaoMiFactory:create
+}
+@enduml

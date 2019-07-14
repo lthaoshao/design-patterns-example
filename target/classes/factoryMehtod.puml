@@ -1,0 +1,27 @@
+@startuml
+interface IMobile{
+call()
+}
+class XiaoMi {
+call()
+}
+class HuaWei {
+call()
+}
+interface IMobileFactory{
+produce()
+}
+class XiaoMiMobileFactory {
+ produce()
+}
+class HuaWeiMobileFactory {
+ produce()
+}
+
+IMobile <|-- XiaoMi
+IMobile <|-- HuaWei
+IMobileFactory <|-- XiaoMiMobileFactory
+IMobileFactory <|-- HuaWeiMobileFactory
+HuaWei <-- HuaWeiMobileFactory:create
+XiaoMi <-- XiaoMiMobileFactory:create
+@enduml
