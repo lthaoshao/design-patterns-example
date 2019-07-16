@@ -1,7 +1,7 @@
 package com.lthaoshao.pattern.factory.abstractfactory;
 
 /**
- * <p>  </p>
+ * <p> 小米工厂 </p>
  *
  * @author lthaoshao
  * @version V1.0

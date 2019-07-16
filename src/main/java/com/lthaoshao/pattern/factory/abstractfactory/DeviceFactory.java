@@ -1,7 +1,7 @@
 package com.lthaoshao.pattern.factory.abstractfactory;
 
 /**
- * <p>  </p>
+ * <p> 抽象工厂 </p>
  *
  * @author lthaoshao
  * @version V1.0
@@ -9,7 +9,17 @@ package com.lthaoshao.pattern.factory.abstractfactory;
  */
 public interface DeviceFactory {
 
+    /**
+     * 生产Pad
+     *
+     * @return
+     */
     Pad producePad();
 
+    /**
+     * 生产Watch
+     *
+     * @return
+     */
     Watch produceWatch();
 }

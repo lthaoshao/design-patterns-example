@@ -1,6 +1,6 @@
 package com.lthaoshao.pattern.factory.abstractfactory;
 /**
- * <p>  </p>
+ * <p> 华为工厂 </p>
  *
  * @author lthaoshao
  * @version V1.0

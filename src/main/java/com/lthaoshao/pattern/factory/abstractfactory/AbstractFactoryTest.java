@@ -1,7 +1,5 @@
 package com.lthaoshao.pattern.factory.abstractfactory;
 
-import com.lthaoshao.pattern.factory.HuaWei;
-
 /**
  * <p>  </p>
  *
