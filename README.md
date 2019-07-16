@@ -15,7 +15,7 @@
     缺点:
         1) 增加产品, 需要修改工厂类, 不符合 "开放-关闭原则";
         2) 工厂中集成了所有的实例的创建逻辑, 高内聚责任分配原则    
-![avatar](com.lthaoshao.pattern.factory/simpleFactory.png "简单工厂模式" )
+![Alt text](https://github.com/lthaoshao/design-patterns-example/blob/master/src/main/resources/com.lthaoshao.pattern.factory/simpleFactory.png "简单工厂模式" )
 
 ### 2. 工厂方法模式(Factory Method Pattern)
 
@@ -41,4 +41,4 @@
         2) 增加新的产品族和具体工厂都很方便;
     缺点: 
         1) 增加新的产品等级结构很复杂, 需要修改抽象类和所有的具体工厂, 对"开放-关闭原则"的支持呈现倾斜性;        
-![avatar](com.lthaoshao.pattern.factory/abstractFactory.png "抽象工厂模式" )
+![avatar](https://github.com/lthaoshao/design-patterns-example/blob/master/src/main/resources/com.lthaoshao.pattern.factory/simpleFactory.png "抽象工厂模式" )
