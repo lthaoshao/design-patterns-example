@@ -1,0 +1,10 @@
+@startuml
+
+class HungrySingleton{
+-instance
++getInsance(): HungrySingleton
+}
+
+HungrySingleton -> HungrySingleton
+
+@enduml
