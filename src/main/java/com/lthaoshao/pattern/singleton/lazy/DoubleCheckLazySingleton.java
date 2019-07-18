@@ -9,6 +9,9 @@ package com.lthaoshao.pattern.singleton.lazy;
 public class DoubleCheckLazySingleton {
 
     private DoubleCheckLazySingleton() {
+        if(instance != null){
+            throw new RuntimeException("不可以实例化");
+        }
     }
 
     // volatile 使之内存可见, 禁止指令重排序

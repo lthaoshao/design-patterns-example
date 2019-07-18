@@ -10,8 +10,8 @@ public class Task implements Runnable{
 
     @Override
     public void run() {
-        InnerClassLazySingleton instance = InnerClassLazySingleton.getInstance();
-        // DoubleCheckLazySingleton instance = DoubleCheckLazySingleton.getInstance();
+        // InnerClassLazySingleton instance = InnerClassLazySingleton.getInstance();
+        DoubleCheckLazySingleton instance = DoubleCheckLazySingleton.getInstance();
         // SimpleLazySingleton instance = SimpleLazySingleton.getInstance();
         System.out.println(instance);
     }

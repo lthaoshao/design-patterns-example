@@ -1,0 +1,10 @@
+@startuml
+
+class Singleton{
+-instance
++getInsance(): Singleton
+}
+
+Singleton -> Singleton
+
+@enduml
