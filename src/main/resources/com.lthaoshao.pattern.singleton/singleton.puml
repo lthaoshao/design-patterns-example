@@ -1,8 +1,9 @@
 @startuml
 
 class Singleton{
--instance
-+getInsance(): Singleton
+-instance:       Singleton
+-Singleton()
++getInstance(): Singleton
 }
 
 Singleton -> Singleton

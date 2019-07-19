@@ -19,5 +19,4 @@ public class SimpleLazySingleton {
         }
         return instance;
     }
-
 }

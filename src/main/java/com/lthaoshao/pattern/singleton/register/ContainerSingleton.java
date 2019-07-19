@@ -16,24 +16,23 @@ public class ContainerSingleton {
     private ContainerSingleton() {
     }
 
-    private static Map<String, Object> map = new ConcurrentHashMap<>();
-
+    private static final Map<String, Object> map = new ConcurrentHashMap<>();
 
     public static Object getInstance(String className) {
 
-        synchronized (map) {
-            if (!map.containsKey(className)) {
-                Object obj;
-                try {
-                    Class<?> clazz = Class.forName(className);
-                    obj = clazz.newInstance();
-                    map.put(className, obj);
-                    return obj;
-                } catch (Exception e) {
-                    e.printStackTrace();
+            synchronized (map) {
+                if (!map.containsKey(className)) {
+                    Object obj;
+                    try {
+                        Class<?> clazz = Class.forName(className);
+                        obj = clazz.newInstance();
+                        map.put(className, obj);
+                        return obj;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-            return map.get(className);
-        }
+        return map.get(className);
     }
 }

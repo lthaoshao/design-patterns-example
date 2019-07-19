@@ -21,9 +21,6 @@ public class DestroySingletonBySerialized {
         String path = "src/main/resources/com.lthaoshao.pattern.singleton/SerializeSingleton.obj";
         SerializeSingleton instance = SerializeSingleton.getInstance();
 
-        // 创建一个实体类
-
-        // 并把它写到文件中
         // 序列化, 就是把内存中的状态, 通过转换成字节码的形式,从而转换成一个输出流, 写入到其他地方(磁盘/网络IO)
         // 内存中的状态就被永久保存下来了
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path))) {
@@ -32,7 +29,6 @@ public class DestroySingletonBySerialized {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
         // 反序列化, 就是将已经持久化的字节码内容, 转换成IO流的形式, 通过IO流进行读取,
         // 进而将读取的内日转换成对象, 在转换的过程中会对对象重新new
@@ -50,5 +46,4 @@ public class DestroySingletonBySerialized {
             e.printStackTrace();
         }
     }
-
 }

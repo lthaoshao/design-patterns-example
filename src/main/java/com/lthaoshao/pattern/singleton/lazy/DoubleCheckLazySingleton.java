@@ -30,7 +30,6 @@ public class DoubleCheckLazySingleton {
                 }
             }
         }
-
         return instance;
     }
 }

@@ -35,6 +35,7 @@ public class RegisterSingletonTest {
     }
 
     private static void enumTest() {
+
         // 破坏枚举式单例
         String path = "src/main/resources/com.lthaoshao.pattern.singleton/EnumSingleton.obj";
         EnumSingleton instance = EnumSingleton.getInstance();

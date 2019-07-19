@@ -1,5 +1,7 @@
 package com.lthaoshao.pattern.singleton.lazy;
 
+import com.lthaoshao.pattern.singleton.ConcurrentExecutor;
+
 /**
  * <p>  </p>
  *
@@ -15,12 +17,18 @@ public class LazySingletonTest {
         // System.out.println(lazySingleton1 == lazySingleton2);
 
 
-        Thread thread = new Thread(new Task());
-        Thread thread1 = new Thread(new Task());
-        thread.start();
-        thread1.start();
+        // Thread thread = new Thread(new Task());
+        // Thread thread1 = new Thread(new Task());
+        // thread.start();
+        // thread1.start();
+        //
+        // System.out.println("-----------------------");
 
-        System.out.println("-----------------------");
+        try {
+            ConcurrentExecutor.execute(() -> System.out.println(Thread.currentThread().getName()+" : "+DoubleCheckLazySingleton.getInstance()), 300, 1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
     }
