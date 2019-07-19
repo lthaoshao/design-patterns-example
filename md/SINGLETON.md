@@ -99,18 +99,20 @@ public class DoubleCheckLazySingleton {
 ```
 双重校验模式, 将锁的范围进一步缩小, 提高了执行效率.
 但我们知道, 在初始化的工程中, 是将字节码文件转成操作系统指令完成的, 
-这个步骤中, CPU可能会对指令进行优化, 如,指令重排序.重排序是指编译器和处理器为了优化程序性能而对指令序列进行重新排序的一种手段
+这个步骤中, CPU可能会对指令进行优化, 如,指令重排序.
+
+重排序是指编译器和处理器为了优化程序性能而对指令序列进行重新排序的一种手段
 synchronized 关键字在被编译成操作指令时, 有可能存在指令重排序, 如:
 
 >instance = new DoubleCheckLazySingleton();
 
-这句话会分为以下几个个步骤:
+这句话会分为以下几个步骤:
 
     memory = allocate;       // 1 为对象分配空间;
     ctroInstance(memory);    // 2 初始化对象
     instance = memory;       // 3 将instance指向刚分配的内存
     
-关键点加步骤 2 和 3 之间, 可能会发生重排序.
+关键点在于步骤 2 和 3 之间, 可能会发生重排序.
 
     memory = allocate;       // 1 为对象分配空间;
     instance = memory;       // 3 将instance指向刚分配的内存
@@ -359,7 +361,7 @@ public class DestroySingletonByReflect {
 * 解决办法
 
 如可以在单例的私有构造中添加判断, 当不满足时抛出异常.
-```java_holder_method_tree
+```java
 private DoubleCheckLazySingleton() {
     if(instance != null){
         throw new RuntimeException("不可以实例化");
@@ -453,7 +455,7 @@ public class DestroySingletonByReflect {
 }
 ```
 以及在反序列化时调用的也是枚举本身的方法:
-```java_holder_method_tree
+```java
 Enum<?> en = Enum.valueOf((Class)cl, name);
 ```
 所以说, 枚举已经有JDK帮我们处理了线程安全和防止反射及反序列化的问题.
