@@ -1,4 +1,4 @@
-# [设计模式](README.md)
+# [设计模式](../README.md)
 
 ## 单例模式(Singleton Pattern)
 ### 概念:
