@@ -1,0 +1,28 @@
+@startuml
+
+interface Prototype{
++clone()
+}
+
+class ConcretePrototypeA{
+-height
++clone()
+}
+
+class ConcretePrototypeB{
+-name
+-age
+-hobbies
++clone()
+}
+
+class PrototypeClient{
+   +PrototypeClient(Prototype)
+}
+
+Prototype <|.. ConcretePrototypeA
+Prototype <|.. ConcretePrototypeB
+
+Prototype "1"<|--*"1" PrototypeClient
+
+@enduml
