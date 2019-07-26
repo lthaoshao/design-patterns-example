@@ -3,3 +3,4 @@
 
 ## [一、工厂模式](md/FACTORY.md)
 ## [二、单例模式](md/SINGLETON.md)
+## [三、原型模式](md/PROTOTYPE.md)
