@@ -6,11 +6,29 @@
 
     <groupId>com.lthaoshao</groupId>
     <artifactId>design-patterns-example</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>pattern-factory</module>
+        <module>pattern-singleton</module>
+        <module>pattern-prototype</module>
+        <module>pattern-proxy</module>
+    </modules>
 
     <properties>
         <java.version>1.8</java.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.8</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <build>
         <plugins>
             <plugin>

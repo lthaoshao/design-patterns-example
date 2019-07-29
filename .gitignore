@@ -25,7 +25,9 @@
 hs_err_pid*
 
 .idea/
-design-patterns-example.iml
+*.iml
 
-target
-target/*
+target/
+
+*/target
+

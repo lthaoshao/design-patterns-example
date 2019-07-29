@@ -1,0 +1,26 @@
+@startuml
+interface Subject{
++operation()
+}
+class RealSubject{
++operation()
+}
+class Proxy{
++Proxy(Subject)
++request()
+-doBefore()
+-doAfter()
+}
+note left of Proxy
+  execute
+  RealSubject.request()
+end note
+class Client{
++main()
+}
+
+Subject <|.. RealSubject
+Subject "1" <|--* "1" Proxy
+RealSubject <-- Client :<<create>>
+Proxy <-- Client :<<create>>
+@enduml
