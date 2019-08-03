@@ -13,6 +13,7 @@
         <module>pattern-singleton</module>
         <module>pattern-prototype</module>
         <module>pattern-proxy</module>
+        <module>pattern-delegate</module>
     </modules>
 
     <properties>

@@ -1,0 +1,38 @@
+@startuml
+
+interface IEmployee{
++doing(String command)
+}
+
+class EmployeeA{
++doing(String command)
+}
+
+class EmployeeB{
++doing(String command)
+}
+
+class Leader{
+-Map<String, IEmployee> subordinates
++doing(String command)
+}
+
+class Boss{
++command(String command, Leader leader)
+}
+
+class DelegateTest{
++main()
+}
+
+IEmployee <|.. EmployeeA
+IEmployee <|.. EmployeeB
+IEmployee <|.. Leader
+
+EmployeeA <.. Leader: <<create>>
+EmployeeB <.. Leader: <<create>>
+Leader <.. DelegateTest: <<create>>
+Boss <.. DelegateTest: <<create>>
+
+
+@enduml
