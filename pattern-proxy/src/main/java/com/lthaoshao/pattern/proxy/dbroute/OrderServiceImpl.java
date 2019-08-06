@@ -1,4 +1,7 @@
 package com.lthaoshao.pattern.proxy.dbroute;
+
+import java.util.Date;
+
 /**
  * <p>  </p>
  *
@@ -10,8 +13,8 @@ public class OrderServiceImpl implements IOrderService {
 
     private OrderDao orderDao;
 
-    public OrderServiceImpl(OrderDao orderDao) {
-        this.orderDao = orderDao;
+    public OrderServiceImpl() {
+        this.orderDao = new OrderDao();
     }
 
     @Override
@@ -20,4 +23,6 @@ public class OrderServiceImpl implements IOrderService {
         orderDao.insert(order);
         return "完成创建订单";
     }
+
+
 }

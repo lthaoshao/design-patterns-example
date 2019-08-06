@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.charset.Charset;
 
 /**
  * <p> 通过序列化破坏单例 </p>
@@ -17,7 +18,7 @@ public class DestroySingletonBySerialized {
 
     public static void main(String[] args) {
 
-        String path = "src/main/resources/com.lthaoshao.pattern.singleton/SerializeSingleton.obj";
+        String path = "pattern-singleton/src/main/resources/SerializeSingleton.obj";
         SerializeSingleton instance = SerializeSingleton.getInstance();
 
         // 序列化, 就是把内存中的状态, 通过转换成字节码的形式,从而转换成一个输出流, 写入到其他地方(磁盘/网络IO)

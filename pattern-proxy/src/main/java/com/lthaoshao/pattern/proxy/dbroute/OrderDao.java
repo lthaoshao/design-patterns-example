@@ -6,7 +6,10 @@ package com.lthaoshao.pattern.proxy.dbroute;
  * @version V1.0
  * @date 2019/7/29 23:35
  */
-public interface OrderDao {
+public class OrderDao {
 
-    int insert(Order order);
+   int insert(Order order){
+       System.out.println("完成订单插入操作");
+       return 1;
+   }
 }

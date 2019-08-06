@@ -2,8 +2,10 @@ package com.lthaoshao.pattern.proxy.dbroute;
 
 import lombok.Data;
 
+import java.util.Date;
+
 /**
- * <p>  </p>
+ * <p> 订单 </p>
  *
  * @author lthaoshao
  * @version V1.0
@@ -12,7 +14,8 @@ import lombok.Data;
 @Data
 public class Order {
 
-    private int id;
-    private int desc;
+    private long id;
+    private String desc;
     private int amount;
+    private Date createTime;
 }
