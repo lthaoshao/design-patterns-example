@@ -1,6 +1,7 @@
 package com.lthaoshao.pattern.proxy.dynamicproxy.jdk;
 
 import com.lthaoshao.pattern.proxy.Traveller;
+import com.lthaoshao.pattern.proxy.dynamicproxy.Customer;
 
 /**
  * <p>  </p>

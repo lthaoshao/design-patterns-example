@@ -1,4 +1,4 @@
-package com.lthaoshao.pattern.proxy.dynamicproxy.jdk;
+package com.lthaoshao.pattern.proxy.dynamicproxy;
 
 import com.lthaoshao.pattern.proxy.Traveller;
 

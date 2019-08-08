@@ -1,0 +1,325 @@
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   <generated>
+
+package net.sf.cglib.core;
+
+
+// Referenced classes of package net.sf.cglib.core:
+//            KeyFactory
+
+public class MethodWrapper$MethodWrapperKey$$KeyFactoryByCGLIB$$d45e49f7 extends KeyFactory
+    implements MethodWrapper.MethodWrapperKey
+{
+
+    public Object newInstance(String s, String as[], String s1)
+    {
+        return new MethodWrapper$MethodWrapperKey$$KeyFactoryByCGLIB$$d45e49f7(s, as, s1);
+    }
+
+    public int hashCode()
+    {
+        0x37ed85c9;
+        FIELD_0;
+        JVM INSTR swap ;
+        0x159e426f;
+        JVM INSTR imul ;
+        JVM INSTR swap ;
+        JVM INSTR dup ;
+        JVM INSTR ifnull 21;
+           goto _L1 _L2
+_L1:
+        hashCode();
+          goto _L3
+_L2:
+        JVM INSTR pop ;
+        false;
+_L3:
+        JVM INSTR iadd ;
+        FIELD_1;
+        if(FIELD_1 == null)
+            break MISSING_BLOCK_LABEL_71;
+        String as[];
+        as;
+        int i = 0;
+          goto _L4
+_L9:
+        as[i];
+        JVM INSTR swap ;
+        0x159e426f;
+        JVM INSTR imul ;
+        JVM INSTR swap ;
+        JVM INSTR dup ;
+        JVM INSTR ifnull 56;
+           goto _L5 _L6
+_L5:
+        hashCode();
+          goto _L7
+_L6:
+        JVM INSTR pop ;
+        false;
+_L7:
+        JVM INSTR iadd ;
+        i++;
+_L4:
+        if(i < as.length) goto _L9; else goto _L8
+_L8:
+        break MISSING_BLOCK_LABEL_72;
+        JVM INSTR pop ;
+        FIELD_2;
+        JVM INSTR swap ;
+        0x159e426f;
+        JVM INSTR imul ;
+        JVM INSTR swap ;
+        JVM INSTR dup ;
+        JVM INSTR ifnull 91;
+           goto _L10 _L11
+_L10:
+        hashCode();
+          goto _L12
+_L11:
+        JVM INSTR pop ;
+        false;
+_L12:
+        JVM INSTR iadd ;
+        return;
+    }
+
+    public boolean equals(Object obj)
+    {
+        if(!(obj instanceof MethodWrapper$MethodWrapperKey$$KeyFactoryByCGLIB$$d45e49f7))
+            break MISSING_BLOCK_LABEL_181;
+        FIELD_0;
+        ((MethodWrapper$MethodWrapperKey$$KeyFactoryByCGLIB$$d45e49f7)obj).FIELD_0;
+        JVM INSTR dup2 ;
+        JVM INSTR ifnonnull 29;
+           goto _L1 _L2
+_L1:
+        break MISSING_BLOCK_LABEL_22;
+_L2:
+        break MISSING_BLOCK_LABEL_29;
+        JVM INSTR ifnonnull 35;
+           goto _L3 _L4
+_L3:
+        break MISSING_BLOCK_LABEL_25;
+_L4:
+        break MISSING_BLOCK_LABEL_35;
+        JVM INSTR pop2 ;
+        break MISSING_BLOCK_LABEL_45;
+        JVM INSTR ifnull 35;
+           goto _L5 _L6
+_L6:
+        break MISSING_BLOCK_LABEL_35;
+_L5:
+        break MISSING_BLOCK_LABEL_39;
+        JVM INSTR pop2 ;
+        break MISSING_BLOCK_LABEL_181;
+        equals();
+        JVM INSTR ifeq 181;
+           goto _L7 _L8
+_L7:
+        break MISSING_BLOCK_LABEL_45;
+_L8:
+        break MISSING_BLOCK_LABEL_181;
+        FIELD_1;
+        ((MethodWrapper$MethodWrapperKey$$KeyFactoryByCGLIB$$d45e49f7)obj).FIELD_1;
+        JVM INSTR dup2 ;
+        JVM INSTR ifnonnull 67;
+           goto _L9 _L10
+_L9:
+        JVM INSTR ifnonnull 73;
+           goto _L11 _L12
+_L11:
+        JVM INSTR pop2 ;
+          goto _L13
+_L10:
+        JVM INSTR ifnull 73;
+           goto _L14 _L12
+_L12:
+        JVM INSTR pop2 ;
+        break MISSING_BLOCK_LABEL_181;
+_L14:
+        JVM INSTR dup2 ;
+        JVM INSTR arraylength .length;
+        JVM INSTR swap ;
+        JVM INSTR arraylength .length;
+        JVM INSTR icmpeq 88;
+           goto _L15 _L16
+_L15:
+        break MISSING_BLOCK_LABEL_84;
+_L16:
+        break MISSING_BLOCK_LABEL_88;
+        JVM INSTR pop2 ;
+        break MISSING_BLOCK_LABEL_181;
+        String as[];
+        as;
+        String as1[];
+        as1;
+        int i = 0;
+          goto _L17
+_L26:
+        as[i];
+        as1[i];
+        JVM INSTR dup2 ;
+        JVM INSTR ifnonnull 115;
+           goto _L18 _L19
+_L18:
+        break MISSING_BLOCK_LABEL_108;
+_L19:
+        break MISSING_BLOCK_LABEL_115;
+        JVM INSTR ifnonnull 121;
+           goto _L20 _L21
+_L20:
+        break MISSING_BLOCK_LABEL_111;
+_L21:
+        break MISSING_BLOCK_LABEL_121;
+        JVM INSTR pop2 ;
+        continue; /* Loop/switch isn't completed */
+        JVM INSTR ifnull 121;
+           goto _L22 _L23
+_L23:
+        break MISSING_BLOCK_LABEL_121;
+_L22:
+        break MISSING_BLOCK_LABEL_125;
+        JVM INSTR pop2 ;
+        break MISSING_BLOCK_LABEL_181;
+        equals();
+        JVM INSTR ifeq 181;
+           goto _L24 _L25
+_L24:
+        continue; /* Loop/switch isn't completed */
+_L25:
+        break MISSING_BLOCK_LABEL_181;
+_L17:
+        if(i < as.length) goto _L26; else goto _L13
+_L13:
+        FIELD_2;
+        ((MethodWrapper$MethodWrapperKey$$KeyFactoryByCGLIB$$d45e49f7)obj).FIELD_2;
+        JVM INSTR dup2 ;
+        JVM INSTR ifnonnull 163;
+           goto _L27 _L28
+_L27:
+        break MISSING_BLOCK_LABEL_156;
+_L28:
+        break MISSING_BLOCK_LABEL_163;
+        JVM INSTR ifnonnull 169;
+           goto _L29 _L30
+_L29:
+        break MISSING_BLOCK_LABEL_159;
+_L30:
+        break MISSING_BLOCK_LABEL_169;
+        JVM INSTR pop2 ;
+        break MISSING_BLOCK_LABEL_179;
+        JVM INSTR ifnull 169;
+           goto _L31 _L32
+_L32:
+        break MISSING_BLOCK_LABEL_169;
+_L31:
+        break MISSING_BLOCK_LABEL_173;
+        JVM INSTR pop2 ;
+        break MISSING_BLOCK_LABEL_181;
+        equals();
+        JVM INSTR ifeq 181;
+           goto _L33 _L34
+_L33:
+        break MISSING_BLOCK_LABEL_179;
+_L34:
+        break MISSING_BLOCK_LABEL_181;
+        return true;
+        return false;
+    }
+
+    public String toString()
+    {
+        new StringBuffer();
+        FIELD_0;
+        if(FIELD_0 == null) goto _L2; else goto _L1
+_L1:
+        toString();
+        append();
+          goto _L3
+_L2:
+        JVM INSTR pop ;
+        "null";
+        append();
+_L3:
+        ", ";
+        append();
+        FIELD_1;
+        if(FIELD_1 == null) goto _L5; else goto _L4
+_L4:
+        JVM INSTR swap ;
+        "{";
+        append();
+        JVM INSTR swap ;
+        String as[];
+        as;
+        int i = 0;
+          goto _L6
+_L11:
+        as[i];
+        if(as[i] == null) goto _L8; else goto _L7
+_L7:
+        toString();
+        append();
+          goto _L9
+_L8:
+        JVM INSTR pop ;
+        "null";
+        append();
+_L9:
+        ", ";
+        append();
+        i++;
+_L6:
+        if(i < as.length) goto _L11; else goto _L10
+_L10:
+        JVM INSTR dup ;
+        JVM INSTR dup ;
+        length();
+        2;
+        JVM INSTR isub ;
+        setLength();
+        "}";
+        append();
+          goto _L12
+_L5:
+        JVM INSTR pop ;
+        "null";
+        append();
+_L12:
+        ", ";
+        append();
+        FIELD_2;
+        if(FIELD_2 == null) goto _L14; else goto _L13
+_L13:
+        toString();
+        append();
+          goto _L15
+_L14:
+        JVM INSTR pop ;
+        "null";
+        append();
+_L15:
+        toString();
+        return;
+    }
+
+    private final String FIELD_0;
+    private final String FIELD_1[];
+    private final String FIELD_2;
+
+    public MethodWrapper$MethodWrapperKey$$KeyFactoryByCGLIB$$d45e49f7()
+    {
+    }
+
+    public MethodWrapper$MethodWrapperKey$$KeyFactoryByCGLIB$$d45e49f7(String s, String as[], String s1)
+    {
+        this;
+        FIELD_0 = s;
+        FIELD_1 = as;
+        FIELD_2 = s1;
+        return;
+    }
+}
