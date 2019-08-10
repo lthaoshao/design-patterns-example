@@ -1,6 +1,6 @@
 package com.lthaoshao.pattern.proxy.dynamicproxy;
 
-import com.lthaoshao.pattern.proxy.Traveller;
+import com.lthaoshao.pattern.proxy.Travellers;
 
 /**
  * <p>  </p>
@@ -8,10 +8,10 @@ import com.lthaoshao.pattern.proxy.Traveller;
  * @author lijinghao
  * @version : Customer.java, v 0.1 2019年07月31日 21:01:01 lijinghao Exp $
  */
-public class Customer implements Traveller {
+public class Customer implements Travellers {
 
     @Override
-    public void buyTrainTickets() {
+    public void buyTickets() {
         System.out.println("顾客买火车票");
     }
 }

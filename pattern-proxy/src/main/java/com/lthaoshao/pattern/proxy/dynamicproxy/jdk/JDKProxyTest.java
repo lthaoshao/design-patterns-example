@@ -1,6 +1,6 @@
 package com.lthaoshao.pattern.proxy.dynamicproxy.jdk;
 
-import com.lthaoshao.pattern.proxy.Traveller;
+import com.lthaoshao.pattern.proxy.Travellers;
 import com.lthaoshao.pattern.proxy.dynamicproxy.Customer;
 
 /**
@@ -11,7 +11,7 @@ import com.lthaoshao.pattern.proxy.dynamicproxy.Customer;
  */
 public class JDKProxyTest {
     public static void main(String[] args) {
-        Traveller traveller = (Traveller)new JDKScalper().getInstance(new Customer());
-        traveller.buyTrainTickets();
+        Travellers traveller = (Travellers)new JDKScalper().getInstance(new Customer());
+        traveller.buyTickets();
     }
 }

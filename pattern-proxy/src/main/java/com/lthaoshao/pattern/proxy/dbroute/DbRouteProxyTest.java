@@ -1,6 +1,7 @@
 package com.lthaoshao.pattern.proxy.dbroute;
 
-import com.lthaoshao.pattern.proxy.dbroute.proxy.OrderServiceDynamicProxy;
+import com.lthaoshao.pattern.proxy.dbroute.proxy.OrderServiceDynamicProxyByCglib;
+import com.lthaoshao.pattern.proxy.dbroute.proxy.OrderServiceStaticProxy;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,7 +21,7 @@ public class DbRouteProxyTest {
         Order order = new Order();
         order.setId(System.currentTimeMillis());
         order.setDesc("Iphone");
-        order.setAmount(8000000); // 分
+        order.setAmount(8000000);
 
         // order.setDate(new Date());
         try {
@@ -30,12 +31,11 @@ public class DbRouteProxyTest {
         }
 
         IOrderService orderService = new OrderServiceImpl();
-        // IOrderService service = new OrderServiceStaticProxy(orderService);
-        OrderServiceDynamicProxy orderProxy = new OrderServiceDynamicProxy();
-        IOrderService service = (IOrderService)orderProxy.getInstance(orderService);
-        service.createOrder(order);
-
-
-        // 查询订单, 按照时间分库查询
+        IOrderService service = new OrderServiceStaticProxy(orderService);
+        // OrderServiceDynamicProxy orderProxy = new OrderServiceDynamicProxy();
+        // OrderServiceDynamicProxyByCglib orderProxy = new OrderServiceDynamicProxyByCglib();
+        // IOrderService service = (IOrderService)orderProxy.getInstance(orderService);
+        String result = service.createOrder(order);
+        System.out.println(result);
     }
 }

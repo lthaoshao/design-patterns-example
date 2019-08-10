@@ -2,7 +2,7 @@
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) 
 
-import com.lthaoshao.pattern.proxy.Traveller;
+import com.lthaoshao.pattern.proxy.Travellers;
 import java.lang.reflect.*;
 
 public final class Traveller$Proxy0 extends Proxy
@@ -76,7 +76,7 @@ public final class Traveller$Proxy0 extends Proxy
             m1 = Class.forName("java.lang.Object").getMethod("equals", new Class[] {
                 Class.forName("java.lang.Object")
             });
-            m3 = Class.forName("com.lthaoshao.pattern.proxy.Traveller").getMethod("buyTrainTickets", new Class[0]);
+            m3 = Class.forName("com.lthaoshao.pattern.proxy.Travellers").getMethod("buyTrainTickets", new Class[0]);
             m2 = Class.forName("java.lang.Object").getMethod("toString", new Class[0]);
             m0 = Class.forName("java.lang.Object").getMethod("hashCode", new Class[0]);
         }

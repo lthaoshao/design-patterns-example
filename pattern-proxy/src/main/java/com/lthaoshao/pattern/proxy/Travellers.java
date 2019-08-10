@@ -8,10 +8,10 @@ import java.io.Serializable;
  * @author lijinghao
  * @version : Traveller.java, v 0.1 2019年07月30日 16:43:43 lijinghao Exp $
  */
-public interface Traveller extends Serializable {
+public interface Travellers extends Serializable {
 
     /**
-     * 买火车票
+     * 买票
      */
-    void buyTrainTickets();
+    void buyTickets();
 }

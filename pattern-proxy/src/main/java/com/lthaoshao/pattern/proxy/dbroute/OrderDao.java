@@ -1,6 +1,6 @@
 package com.lthaoshao.pattern.proxy.dbroute;
 /**
- * <p>  </p>
+ * <p> 数据持久层 </p>
  *
  * @author lthaoshao
  * @version V1.0

@@ -1,6 +1,6 @@
 package com.lthaoshao.pattern.proxy.dynamicproxy.jdk;
 
-import com.lthaoshao.pattern.proxy.Traveller;
+import com.lthaoshao.pattern.proxy.Travellers;
 import sun.misc.ProxyGenerator;
 
 import java.io.*;
@@ -25,7 +25,7 @@ public class JDKScalper implements InvocationHandler, Serializable {
         Object instance = Proxy.newProxyInstance(clazz.getClassLoader(), clazz.getInterfaces(), this);
 
         // 获取到这个class对象的字节流
-        byte[] proxy = ProxyGenerator.generateProxyClass("Traveller$Proxy0", new Class[]{Traveller.class});
+        byte[] proxy = ProxyGenerator.generateProxyClass("Traveller$Proxy0", new Class[]{Travellers.class});
         // 把这个代理对象输出到文件，之后再进行jad反编译
         try (FileOutputStream os = new FileOutputStream("pattern-proxy/src/main/resources/Traveller$Proxy0.class")) {
             os.write(proxy);

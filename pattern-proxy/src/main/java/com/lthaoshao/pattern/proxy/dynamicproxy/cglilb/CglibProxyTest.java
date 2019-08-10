@@ -21,7 +21,7 @@ public class CglibProxyTest {
         Customer customer = new Customer();
         CglibScalper scalper = new CglibScalper();
         Customer proxy = (Customer) scalper.getInstance(customer.getClass());
-        proxy.buyTrainTickets();
+        proxy.buyTickets();
 
     }
 }

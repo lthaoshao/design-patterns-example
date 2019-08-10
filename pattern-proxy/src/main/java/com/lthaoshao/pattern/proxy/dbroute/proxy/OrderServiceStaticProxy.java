@@ -7,7 +7,7 @@ import com.lthaoshao.pattern.proxy.dbroute.Order;
 import java.text.SimpleDateFormat;
 
 /**
- * <p>  </p>
+ * <p> 订单服务静态代理 </p>
  *
  * @author lijinghao
  * @version : OrderServiceStaticProxy.java, v 0.1 2019年07月30日 18:06:06 lijinghao Exp $
@@ -26,15 +26,12 @@ public class OrderServiceStaticProxy implements IOrderService {
     @Override
     public String createOrder(Order order) {
         doBefore();
-
         // 现在在调用服务之前设置数据源
         DynamicDataSourceEntry.set("DB_"+ sdf.format(order.getCreateTime()));
         System.out.println("自动分配数据源到:" + DynamicDataSourceEntry.get());
-
         String result = orderService.createOrder(order);
-
         doAfter();
-
+        // 使用完成后需要进行重置数据源
         DynamicDataSourceEntry.restore();
         System.out.println("重置数据源到:" + DynamicDataSourceEntry.get());
         return result;

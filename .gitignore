@@ -2,9 +2,9 @@
 ### Java template
 # Compiled class file
 *.class
-
 # Log file
 *.log
+out
 
 # BlueJ files
 *.ctxt
@@ -29,4 +29,5 @@ hs_err_pid*
 
 
 */target
+
 

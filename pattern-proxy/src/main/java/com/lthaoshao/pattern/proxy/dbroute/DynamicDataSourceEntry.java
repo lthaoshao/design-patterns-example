@@ -8,6 +8,9 @@ package com.lthaoshao.pattern.proxy.dbroute;
  */
 public class DynamicDataSourceEntry {
 
+    /**
+     * 默认数据源
+     */
     private static final String DEFAULT_DATASOURCE = null;
 
     /**
