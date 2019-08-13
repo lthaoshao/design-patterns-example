@@ -14,7 +14,7 @@
 4. 在循环体中生产大量对象时;
 
 ### UML
-![Alt text](https://github.com/lthaoshao/design-patterns-example/blob/master/src/main/resources/com.lthaoshao.pattern.prototype/prototype.png "原型模式")
+![Alt text](https://github.com/lthaoshao/design-patterns-example/blob/master/pattern-prototype/src/main/resources/prototype.png?raw=true "原型模式")
 ### 浅克隆
 
 

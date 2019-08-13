@@ -5,8 +5,8 @@
 import com.lthaoshao.pattern.proxy.Travellers;
 import java.lang.reflect.*;
 
-public final class Traveller$Proxy0 extends Proxy
-    implements Traveller
+public final class Travellers$Proxy0 extends Proxy
+    implements Travellers
 {
 
     public final boolean equals(Object obj)
@@ -24,7 +24,7 @@ public final class Traveller$Proxy0 extends Proxy
         }
     }
 
-    public final void buyTrainTickets()
+    public final void buyTickets()
     {
         try
         {
@@ -76,7 +76,7 @@ public final class Traveller$Proxy0 extends Proxy
             m1 = Class.forName("java.lang.Object").getMethod("equals", new Class[] {
                 Class.forName("java.lang.Object")
             });
-            m3 = Class.forName("com.lthaoshao.pattern.proxy.Travellers").getMethod("buyTrainTickets", new Class[0]);
+            m3 = Class.forName("com.lthaoshao.pattern.proxy.Travellers").getMethod("buyTickets", new Class[0]);
             m2 = Class.forName("java.lang.Object").getMethod("toString", new Class[0]);
             m0 = Class.forName("java.lang.Object").getMethod("hashCode", new Class[0]);
         }
@@ -90,7 +90,7 @@ public final class Traveller$Proxy0 extends Proxy
         }
     }
 
-    public Traveller$Proxy0(InvocationHandler invocationhandler)
+    public Travellers$Proxy0(InvocationHandler invocationhandler)
     {
         super(invocationhandler);
     }

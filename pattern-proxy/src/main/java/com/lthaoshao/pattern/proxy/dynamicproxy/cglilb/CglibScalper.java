@@ -7,14 +7,13 @@ import net.sf.cglib.proxy.MethodProxy;
 import java.lang.reflect.Method;
 
 /**
- * <p>  </p>
+ * <p> cglib动态代理 </p>
  *
  * @author lthaoshao
  * @version V1.0
  * @date 2019/8/8 21:57
  */
 public class CglibScalper implements MethodInterceptor {
-
 
     public Object getInstance(Class<?> clazz){
         Enhancer enhancer = new Enhancer();

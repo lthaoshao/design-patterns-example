@@ -1,9 +1,6 @@
 package com.lthaoshao.pattern.proxy.dynamicproxy.jdk;
 
-import com.lthaoshao.pattern.proxy.Travellers;
-import sun.misc.ProxyGenerator;
-
-import java.io.*;
+import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -19,28 +16,26 @@ public class JDKScalper implements InvocationHandler, Serializable {
 
     private Object target;
 
+    /**
+     * 获取代理实例
+     *
+     * @param target
+     * @return
+     */
     public Object getInstance(Object target) {
         this.target = target;
         Class<?> clazz = target.getClass();
         Object instance = Proxy.newProxyInstance(clazz.getClassLoader(), clazz.getInterfaces(), this);
-
-        // 获取到这个class对象的字节流
-        byte[] proxy = ProxyGenerator.generateProxyClass("Traveller$Proxy0", new Class[]{Travellers.class});
-        // 把这个代理对象输出到文件，之后再进行jad反编译
-        try (FileOutputStream os = new FileOutputStream("pattern-proxy/src/main/resources/Traveller$Proxy0.class")) {
-            os.write(proxy);
-            os.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         return instance;
     }
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        // 前置操作
         doBefore();
+        // 执行被代理方法
         Object result = method.invoke(this.target, args);
+        // 后置操作
         doAfter();
         return result;
     }
