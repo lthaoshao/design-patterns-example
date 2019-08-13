@@ -1287,7 +1287,7 @@ public class MyTravellers$Proxy0 extends MyProxy implements Travellers {
 
 解决办法：添加tools.jar到环境中
 
-![1565699090842](C:\Users\huanhuan\AppData\Roaming\Typora\typora-user-images\1565699090842.png)
+![Alt text](https://github.com/lthaoshao/design-patterns-example/blob/master/pattern-proxy/src/main/resources/problem-1.png?raw=true "解决办法")
 
 
 
