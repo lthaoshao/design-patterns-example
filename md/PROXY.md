@@ -1287,7 +1287,7 @@ public class MyTravellers$Proxy0 extends MyProxy implements Travellers {
 
 解决办法：添加tools.jar到环境中
 
-![Alt text](https://github.com/lthaoshao/design-patterns-example/blob/master/pattern-proxy/src/main/resources/problem-1.png?raw=true "解决办法")
+![1565699090842](C:\Users\huanhuan\AppData\Roaming\Typora\typora-user-images\1565699090842.png)
 
 
 
@@ -1328,6 +1328,7 @@ public class CglibScalper implements MethodInterceptor {
 
     public Object getInstance(Class<?> clazz){
         Enhancer enhancer = new Enhancer();
+        // 将被代理类作为要生成的类的父类
         enhancer.setSuperclass(clazz);
         enhancer.setCallback(this);
         return enhancer.create();
@@ -1347,6 +1348,18 @@ public class CglibScalper implements MethodInterceptor {
 
     private void doAfter() {
         System.out.println("cglib proxy，after 执行");
+    }
+}
+```
+
+目标对象，这里的目标对象不需要实现任何接口，cglib是通过继承目标接口来实现的。
+
+```java
+package com.lthaoshao.pattern.proxy.dynamicproxy.cglilb;
+
+public class Customer {
+    public void buyTickets() {
+        System.out.println("开始买票。。。");
     }
 }
 ```
@@ -1387,14 +1400,1278 @@ cglib proxy，after 执行
 Process finished with exit code 0
 ```
 
+结果符合我们的预期。那么CGLIB是怎么实现动态代理的呢？
+
+我们利用一下CGLIB提供的工具，把动态生成的代理类打印出来看看。
+
+```java
+package com.lthaoshao.pattern.proxy.dynamicproxy.cglilb;
+
+import net.sf.cglib.core.DebuggingClassWriter;
+
+/**
+ * <p> test </p>
+ *
+ * @author lthaoshao
+ * @version V1.0
+ * @date 2019/8/8 22:06
+ */
+public class CglibProxyTest {
+
+    public static void main(String[] args) {
+
+        // 利用cglib的代理类，将内存中的class文件写入磁盘
+        System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY, "pattern-proxy/src/main/resources/");
+
+        Customer customer = new Customer();
+        CglibScalper scalper = new CglibScalper();
+        Customer proxy = (Customer) scalper.getInstance(customer.getClass());
+        proxy.buyTickets();
+    }
+}
+```
+
+执行完后，在我们指定的目录下生成了以下目录和文件：
+
+```verilog
+resources
+--com.lthaoshao.pattern.proxy.dynamicproxy.cglib
+------Customer$$EnhancerByCGLIB$$6ec9c1ce$$FastClassByCGLIB$$8a48b4bd.class
+------Customer$$EnhancerByCGLIB$$6ec9c1ce.class
+------Customer$$FastClassByCGLIB$$4c63083e.class
+
+--net.sf.cglib
+----core
+------MethodWrapper$MethodWrapperKey$$KeyFactoryByCGLIB$$d45e49f7.class
+----proxy
+------Enhancer$EnhancerKey$$KeyFactoryByCGLIB$$7fb24d72.class
+```
+
+我们通过JAD反编译后进行追踪发现，`Customer$$EnhancerByCGLIB$$6ec9c1ce.class`就是CGLIB生成的代理类。它继承了我们的Customer类，如下：
+
+```java
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   <generated>
+
+package com.lthaoshao.pattern.proxy.dynamicproxy.cglilb;
+
+import java.lang.reflect.Method;
+import net.sf.cglib.core.ReflectUtils;
+import net.sf.cglib.core.Signature;
+import net.sf.cglib.proxy.*;
+
+// Referenced classes of package com.lthaoshao.pattern.proxy.dynamicproxy.cglilb:
+//            Customer
+
+public class Customer$$EnhancerByCGLIB$$6ec9c1ce extends Customer
+    implements Factory
+{
+
+    static void CGLIB$STATICHOOK1()
+    {
+        Method amethod[];
+        Method amethod1[];
+        CGLIB$THREAD_CALLBACKS = new ThreadLocal();
+        CGLIB$emptyArgs = new Object[0];
+        Class class1 = Class.forName("com.lthaoshao.pattern.proxy.dynamicproxy.cglilb.Customer$$EnhancerByCGLIB$$6ec9c1ce");
+        Class class2;
+        amethod = ReflectUtils.findMethods(new String[] {
+            "equals", "(Ljava/lang/Object;)Z", "toString", "()Ljava/lang/String;", "hashCode", "()I", "clone", "()Ljava/lang/Object;"
+        }, (class2 = Class.forName("java.lang.Object")).getDeclaredMethods());
+        Method[] _tmp = amethod;
+        CGLIB$equals$1$Method = amethod[0];
+        CGLIB$equals$1$Proxy = MethodProxy.create(class2, class1, "(Ljava/lang/Object;)Z", "equals", "CGLIB$equals$1");
+        CGLIB$toString$2$Method = amethod[1];
+        CGLIB$toString$2$Proxy = MethodProxy.create(class2, class1, "()Ljava/lang/String;", "toString", "CGLIB$toString$2");
+        CGLIB$hashCode$3$Method = amethod[2];
+        CGLIB$hashCode$3$Proxy = MethodProxy.create(class2, class1, "()I", "hashCode", "CGLIB$hashCode$3");
+        CGLIB$clone$4$Method = amethod[3];
+        CGLIB$clone$4$Proxy = MethodProxy.create(class2, class1, "()Ljava/lang/Object;", "clone", "CGLIB$clone$4");
+        amethod1 = ReflectUtils.findMethods(new String[] {
+            "buyTickets", "()V"
+        }, (class2 = Class.forName("com.lthaoshao.pattern.proxy.dynamicproxy.cglilb.Customer")).getDeclaredMethods());
+        Method[] _tmp1 = amethod1;
+        CGLIB$buyTickets$0$Method = amethod1[0];
+        CGLIB$buyTickets$0$Proxy = MethodProxy.create(class2, class1, "()V", "buyTickets", "CGLIB$buyTickets$0");
+    }
+
+    final void CGLIB$buyTickets$0()
+    {
+        super.buyTickets();
+    }
+
+    public final void buyTickets()
+    {
+        CGLIB$CALLBACK_0;
+        if(CGLIB$CALLBACK_0 != null) goto _L2; else goto _L1
+_L1:
+        JVM INSTR pop ;
+        CGLIB$BIND_CALLBACKS(this);
+        CGLIB$CALLBACK_0;
+_L2:
+        JVM INSTR dup ;
+        JVM INSTR ifnull 37;
+           goto _L3 _L4
+_L3:
+        break MISSING_BLOCK_LABEL_21;
+_L4:
+        break MISSING_BLOCK_LABEL_37;
+        this;
+        CGLIB$buyTickets$0$Method;
+        CGLIB$emptyArgs;
+        CGLIB$buyTickets$0$Proxy;
+        intercept();
+        return;
+        super.buyTickets();
+        return;
+    }
+
+    final boolean CGLIB$equals$1(Object obj)
+    {
+        return super.equals(obj);
+    }
+
+    public final boolean equals(Object obj)
+    {
+        CGLIB$CALLBACK_0;
+        if(CGLIB$CALLBACK_0 != null) goto _L2; else goto _L1
+_L1:
+        JVM INSTR pop ;
+        CGLIB$BIND_CALLBACKS(this);
+        CGLIB$CALLBACK_0;
+_L2:
+        JVM INSTR dup ;
+        JVM INSTR ifnull 57;
+           goto _L3 _L4
+_L3:
+        this;
+        CGLIB$equals$1$Method;
+        new Object[] {
+            obj
+        };
+        CGLIB$equals$1$Proxy;
+        intercept();
+        JVM INSTR dup ;
+        JVM INSTR ifnonnull 50;
+           goto _L5 _L6
+_L5:
+        JVM INSTR pop ;
+        false;
+          goto _L7
+_L6:
+        (Boolean);
+        booleanValue();
+_L7:
+        return;
+_L4:
+        return super.equals(obj);
+    }
+
+    final String CGLIB$toString$2()
+    {
+        return super.toString();
+    }
+
+    public final String toString()
+    {
+        CGLIB$CALLBACK_0;
+        if(CGLIB$CALLBACK_0 != null) goto _L2; else goto _L1
+_L1:
+        JVM INSTR pop ;
+        CGLIB$BIND_CALLBACKS(this);
+        CGLIB$CALLBACK_0;
+_L2:
+        JVM INSTR dup ;
+        JVM INSTR ifnull 40;
+           goto _L3 _L4
+_L3:
+        this;
+        CGLIB$toString$2$Method;
+        CGLIB$emptyArgs;
+        CGLIB$toString$2$Proxy;
+        intercept();
+        (String);
+        return;
+_L4:
+        return super.toString();
+    }
+
+    final int CGLIB$hashCode$3()
+    {
+        return super.hashCode();
+    }
+
+    public final int hashCode()
+    {
+        CGLIB$CALLBACK_0;
+        if(CGLIB$CALLBACK_0 != null) goto _L2; else goto _L1
+_L1:
+        JVM INSTR pop ;
+        CGLIB$BIND_CALLBACKS(this);
+        CGLIB$CALLBACK_0;
+_L2:
+        JVM INSTR dup ;
+        JVM INSTR ifnull 52;
+           goto _L3 _L4
+_L3:
+        this;
+        CGLIB$hashCode$3$Method;
+        CGLIB$emptyArgs;
+        CGLIB$hashCode$3$Proxy;
+        intercept();
+        JVM INSTR dup ;
+        JVM INSTR ifnonnull 45;
+           goto _L5 _L6
+_L5:
+        JVM INSTR pop ;
+        0;
+          goto _L7
+_L6:
+        (Number);
+        intValue();
+_L7:
+        return;
+_L4:
+        return super.hashCode();
+    }
+
+    final Object CGLIB$clone$4()
+        throws CloneNotSupportedException
+    {
+        return super.clone();
+    }
+
+    protected final Object clone()
+        throws CloneNotSupportedException
+    {
+        CGLIB$CALLBACK_0;
+        if(CGLIB$CALLBACK_0 != null) goto _L2; else goto _L1
+_L1:
+        JVM INSTR pop ;
+        CGLIB$BIND_CALLBACKS(this);
+        CGLIB$CALLBACK_0;
+_L2:
+        JVM INSTR dup ;
+        JVM INSTR ifnull 37;
+           goto _L3 _L4
+_L3:
+        this;
+        CGLIB$clone$4$Method;
+        CGLIB$emptyArgs;
+        CGLIB$clone$4$Proxy;
+        intercept();
+        return;
+_L4:
+        return super.clone();
+    }
+
+    public static MethodProxy CGLIB$findMethodProxy(Signature signature)
+    {
+        String s = signature.toString();
+        s;
+        s.hashCode();
+        JVM INSTR lookupswitch 5: default 120
+    //                   -508378822: 60
+    //                   635195988: 72
+    //                   1826985398: 84
+    //                   1913648695: 96
+    //                   1984935277: 108;
+           goto _L1 _L2 _L3 _L4 _L5 _L6
+_L2:
+        "clone()Ljava/lang/Object;";
+        equals();
+        JVM INSTR ifeq 121;
+           goto _L7 _L8
+_L8:
+        break MISSING_BLOCK_LABEL_121;
+_L7:
+        return CGLIB$clone$4$Proxy;
+_L3:
+        "buyTickets()V";
+        equals();
+        JVM INSTR ifeq 121;
+           goto _L9 _L10
+_L10:
+        break MISSING_BLOCK_LABEL_121;
+_L9:
+        return CGLIB$buyTickets$0$Proxy;
+_L4:
+        "equals(Ljava/lang/Object;)Z";
+        equals();
+        JVM INSTR ifeq 121;
+           goto _L11 _L12
+_L12:
+        break MISSING_BLOCK_LABEL_121;
+_L11:
+        return CGLIB$equals$1$Proxy;
+_L5:
+        "toString()Ljava/lang/String;";
+        equals();
+        JVM INSTR ifeq 121;
+           goto _L13 _L14
+_L14:
+        break MISSING_BLOCK_LABEL_121;
+_L13:
+        return CGLIB$toString$2$Proxy;
+_L6:
+        "hashCode()I";
+        equals();
+        JVM INSTR ifeq 121;
+           goto _L15 _L16
+_L16:
+        break MISSING_BLOCK_LABEL_121;
+_L15:
+        return CGLIB$hashCode$3$Proxy;
+_L1:
+        JVM INSTR pop ;
+        return null;
+    }
+
+    public static void CGLIB$SET_THREAD_CALLBACKS(Callback acallback[])
+    {
+        CGLIB$THREAD_CALLBACKS.set(acallback);
+    }
+
+    public static void CGLIB$SET_STATIC_CALLBACKS(Callback acallback[])
+    {
+        CGLIB$STATIC_CALLBACKS = acallback;
+    }
+
+    private static final void CGLIB$BIND_CALLBACKS(Object obj)
+    {
+        Customer$$EnhancerByCGLIB$$6ec9c1ce customer$$enhancerbycglib$$6ec9c1ce = (Customer$$EnhancerByCGLIB$$6ec9c1ce)obj;
+        if(customer$$enhancerbycglib$$6ec9c1ce.CGLIB$BOUND) goto _L2; else goto _L1
+_L1:
+        Object obj1;
+        customer$$enhancerbycglib$$6ec9c1ce.CGLIB$BOUND = true;
+        obj1 = CGLIB$THREAD_CALLBACKS.get();
+        obj1;
+        if(obj1 != null) goto _L4; else goto _L3
+_L3:
+        JVM INSTR pop ;
+        CGLIB$STATIC_CALLBACKS;
+        if(CGLIB$STATIC_CALLBACKS != null) goto _L4; else goto _L5
+_L5:
+        JVM INSTR pop ;
+          goto _L2
+_L4:
+        (Callback[]);
+        customer$$enhancerbycglib$$6ec9c1ce;
+        JVM INSTR swap ;
+        0;
+        JVM INSTR aaload ;
+        (MethodInterceptor);
+        CGLIB$CALLBACK_0;
+_L2:
+    }
+
+    public Object newInstance(Callback acallback[])
+    {
+        CGLIB$SET_THREAD_CALLBACKS(acallback);
+        CGLIB$SET_THREAD_CALLBACKS(null);
+        return new Customer$$EnhancerByCGLIB$$6ec9c1ce();
+    }
+
+    public Object newInstance(Callback callback)
+    {
+        CGLIB$SET_THREAD_CALLBACKS(new Callback[] {
+            callback
+        });
+        CGLIB$SET_THREAD_CALLBACKS(null);
+        return new Customer$$EnhancerByCGLIB$$6ec9c1ce();
+    }
+
+    public Object newInstance(Class aclass[], Object aobj[], Callback acallback[])
+    {
+        CGLIB$SET_THREAD_CALLBACKS(acallback);
+        JVM INSTR new #2   <Class Customer$$EnhancerByCGLIB$$6ec9c1ce>;
+        JVM INSTR dup ;
+        aclass;
+        aclass.length;
+        JVM INSTR tableswitch 0 0: default 35
+    //                   0 28;
+           goto _L1 _L2
+_L2:
+        JVM INSTR pop ;
+        Customer$$EnhancerByCGLIB$$6ec9c1ce();
+          goto _L3
+_L1:
+        JVM INSTR pop ;
+        throw new IllegalArgumentException("Constructor not found");
+_L3:
+        CGLIB$SET_THREAD_CALLBACKS(null);
+        return;
+    }
+
+    public Callback getCallback(int i)
+    {
+        CGLIB$BIND_CALLBACKS(this);
+        this;
+        i;
+        JVM INSTR tableswitch 0 0: default 30
+    //                   0 24;
+           goto _L1 _L2
+_L2:
+        CGLIB$CALLBACK_0;
+          goto _L3
+_L1:
+        JVM INSTR pop ;
+        null;
+_L3:
+        return;
+    }
+
+    public void setCallback(int i, Callback callback)
+    {
+        switch(i)
+        {
+        case 0: // '\0'
+            CGLIB$CALLBACK_0 = (MethodInterceptor)callback;
+            break;
+        }
+    }
+
+    public Callback[] getCallbacks()
+    {
+        CGLIB$BIND_CALLBACKS(this);
+        this;
+        return (new Callback[] {
+            CGLIB$CALLBACK_0
+        });
+    }
+
+    public void setCallbacks(Callback acallback[])
+    {
+        this;
+        acallback;
+        JVM INSTR dup2 ;
+        0;
+        JVM INSTR aaload ;
+        (MethodInterceptor);
+        CGLIB$CALLBACK_0;
+    }
+
+    private boolean CGLIB$BOUND;
+    public static Object CGLIB$FACTORY_DATA;
+    private static final ThreadLocal CGLIB$THREAD_CALLBACKS;
+    private static final Callback CGLIB$STATIC_CALLBACKS[];
+    private MethodInterceptor CGLIB$CALLBACK_0;
+    private static Object CGLIB$CALLBACK_FILTER;
+    private static final Method CGLIB$buyTickets$0$Method;
+    private static final MethodProxy CGLIB$buyTickets$0$Proxy;
+    private static final Object CGLIB$emptyArgs[];
+    private static final Method CGLIB$equals$1$Method;
+    private static final MethodProxy CGLIB$equals$1$Proxy;
+    private static final Method CGLIB$toString$2$Method;
+    private static final MethodProxy CGLIB$toString$2$Proxy;
+    private static final Method CGLIB$hashCode$3$Method;
+    private static final MethodProxy CGLIB$hashCode$3$Proxy;
+    private static final Method CGLIB$clone$4$Method;
+    private static final MethodProxy CGLIB$clone$4$Proxy;
+
+    static 
+    {
+        CGLIB$STATICHOOK1();
+    }
+
+    public Customer$$EnhancerByCGLIB$$6ec9c1ce()
+    {
+        CGLIB$BIND_CALLBACKS(this);
+    }
+}
+```
+
+重写了 Customer 类的所有方法。我们通过代理类的源码可以看到，代理类会获得所有在 父 类 继 承 来 的 方 法， 并 且 会 有 MethodProxy 与 之 对 应 ， 比 如`Method CGLIB$buyTickets$0$Method`、`MethodProxy CGLIB$buyTickets$0$Proxy`等等，这些方法在代理类的`buyTickets`中都有调用。
+
+```java
+// 代理方法 （methodProxy.invokeSuper 会调用）   
+	final void CGLIB$buyTickets$0()
+    {
+        super.buyTickets();
+    }
+
+//被代理方法(methodProxy.invoke 会调用，这就是为什么在拦截器中调用 methodProxy.invoke 会死循环，一直在调
+用拦截器)
+    public final void buyTickets()
+    {
+        CGLIB$CALLBACK_0;
+        if(CGLIB$CALLBACK_0 != null) goto _L2; else goto _L1
+_L1:
+        JVM INSTR pop ;
+        CGLIB$BIND_CALLBACKS(this);
+        CGLIB$CALLBACK_0;
+_L2:
+        JVM INSTR dup ;
+        JVM INSTR ifnull 37;
+           goto _L3 _L4
+_L3:
+        break MISSING_BLOCK_LABEL_21;
+_L4:
+        break MISSING_BLOCK_LABEL_37;
+        this;
+        CGLIB$buyTickets$0$Method;
+        CGLIB$emptyArgs;
+        CGLIB$buyTickets$0$Proxy;
+    	// 调用拦截器
+        intercept();
+        return;
+        super.buyTickets();
+        return;
+    }
+```
+
+调用过程：
+
+代理对象调用 this.buyTickets()方法 --> 调用拦截器 --> methodProxy.invokeSuper() --> CGLIB$buyTickets$0 --> >被代理对象 buyTickets()方法。
+
+此时，我们发现拦截器 MethodInterceptor 中就是由 MethodProxy 的 invokeSuper 方法调用代理方法的，MethodProxy 非常关键，我们分析一下它具体做了什么。 
+
+```java
+/*
+ * Copyright 2003,2004 The Apache Software Foundation
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package net.sf.cglib.proxy;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+import net.sf.cglib.core.AbstractClassGenerator;
+import net.sf.cglib.core.CodeGenerationException;
+import net.sf.cglib.core.GeneratorStrategy;
+import net.sf.cglib.core.NamingPolicy;
+import net.sf.cglib.core.Signature;
+import net.sf.cglib.reflect.FastClass;
+
+public class MethodProxy {
+    private Signature sig1;
+    private Signature sig2;
+    private CreateInfo createInfo;
+    
+    private final Object initLock = new Object();
+    private volatile FastClassInfo fastClassInfo;
+    
+    public static MethodProxy create(Class c1, Class c2, String desc, String name1, String name2) {
+        MethodProxy proxy = new MethodProxy();
+        proxy.sig1 = new Signature(name1, desc);
+        proxy.sig2 = new Signature(name2, desc);
+        proxy.createInfo = new CreateInfo(c1, c2);
+        return proxy;
+    }
+
+    // MethodProxy invoke()/invokeSuper() 都调用了 init()
+    private void init()
+    {
+        if (fastClassInfo == null)
+        {
+            synchronized (initLock)
+            {
+                if (fastClassInfo == null)
+                {
+                    CreateInfo ci = createInfo;
+
+                    FastClassInfo fci = new FastClassInfo();
+                    // 如果缓存中就取出，没有就生成新的 FastClass
+                    fci.f1 = helper(ci, ci.c1);
+                    fci.f2 = helper(ci, ci.c2);
+                    // 获取方法的 index
+                    fci.i1 = fci.f1.getIndex(sig1);
+                    fci.i2 = fci.f2.getIndex(sig2);
+                    fastClassInfo = fci;
+                    createInfo = null;
+                }
+            }
+        }
+    }
+
+    private static class FastClassInfo
+    {
+        FastClass f1;
+        FastClass f2;
+        int i1;
+        int i2;
+    }
+
+    private static class CreateInfo
+    {
+        Class c1;
+        Class c2;
+        NamingPolicy namingPolicy;
+        GeneratorStrategy strategy;
+        boolean attemptLoad;
+        
+        public CreateInfo(Class c1, Class c2)
+        {
+            this.c1 = c1;
+            this.c2 = c2;
+            AbstractClassGenerator fromEnhancer = AbstractClassGenerator.getCurrent();
+            if (fromEnhancer != null) {
+                namingPolicy = fromEnhancer.getNamingPolicy();
+                strategy = fromEnhancer.getStrategy();
+                attemptLoad = fromEnhancer.getAttemptLoad();
+            }
+        }
+    }
+
+    private static FastClass helper(CreateInfo ci, Class type) {
+        FastClass.Generator g = new FastClass.Generator();
+        g.setType(type);
+        g.setClassLoader(ci.c2.getClassLoader());
+        g.setNamingPolicy(ci.namingPolicy);
+        g.setStrategy(ci.strategy);
+        g.setAttemptLoad(ci.attemptLoad);
+        return g.create();
+    }
+
+    private MethodProxy() {
+    }
+
+    public Signature getSignature() {
+        return sig1;
+    }
+
+    public String getSuperName() {
+        return sig2.getName();
+    }
+
+    public int getSuperIndex() {
+        init();
+        return fastClassInfo.i2;
+    }
+
+    // For testing
+    FastClass getFastClass() {
+      init();
+      return fastClassInfo.f1;
+    }
+
+    // For testing
+    FastClass getSuperFastClass() {
+      init();
+      return fastClassInfo.f2;
+    }
+
+    public static MethodProxy find(Class type, Signature sig) {
+        try {
+            Method m = type.getDeclaredMethod(MethodInterceptorGenerator.FIND_PROXY_NAME,
+                                              MethodInterceptorGenerator.FIND_PROXY_TYPES);
+            return (MethodProxy)m.invoke(null, new Object[]{ sig });
+        } catch (NoSuchMethodException e) {
+            throw new IllegalArgumentException("Class " + type + " does not use a MethodInterceptor");
+        } catch (IllegalAccessException e) {
+            throw new CodeGenerationException(e);
+        } catch (InvocationTargetException e) {
+            throw new CodeGenerationException(e);
+        }
+    }
+
+    public Object invoke(Object obj, Object[] args) throws Throwable {
+        try {
+            init();
+            FastClassInfo fci = fastClassInfo;
+            return fci.f1.invoke(fci.i1, obj, args);
+        } catch (InvocationTargetException e) {
+            throw e.getTargetException();
+        } catch (IllegalArgumentException e) {
+            if (fastClassInfo.i1 < 0)
+                throw new IllegalArgumentException("Protected method: " + sig1);
+            throw e;
+        }
+    }
+
+    public Object invokeSuper(Object obj, Object[] args) throws Throwable {
+        try {
+            init();
+            FastClassInfo fci = fastClassInfo;
+            return fci.f2.invoke(fci.i2, obj, args);
+        } catch (InvocationTargetException e) {
+            throw e.getTargetException();
+        }
+    }
+}
+
+```
+
+调用invokeSuper() --> init() --> FastClassInfo --> 后面就是在调用FastClass的invoke()方法了。还记得之前生成的文件中有个`Customer$$EnhancerByCGLIB$$6ec9c1ce$$FastClassByCGLIB$$8a48b4bd.class`它就是代理类的Fast类。
+
+CGLIB动态代理的执行效率之所以比JDK高，就是因为它采用了FastClass机制。它的原理就是：为代理类和被代理类各生成一个Class，这个Class会为代理类和被代理类分配各分配一个index（int类型）。这个index当做一个参数传入，FastClass就可以直接定位到要调用的方法并直接调用，省去了反射调用的过程，所以它的执行效率要比JDK动态代理的反射调用执行效率高。
+
+FastClass的反编译结果如下：
+
+```java
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   <generated>
+
+package com.lthaoshao.pattern.proxy.dynamicproxy.cglilb;
+
+import java.lang.reflect.InvocationTargetException;
+import net.sf.cglib.core.Signature;
+import net.sf.cglib.proxy.Callback;
+import net.sf.cglib.reflect.FastClass;
+
+public class Customer$$EnhancerByCGLIB$$6ec9c1ce$$FastClassByCGLIB$$8a48b4bd extends FastClass
+{
+
+    public int getIndex(Signature signature)
+    {
+        String s = signature.toString();
+        s;
+        s.hashCode();
+        JVM INSTR lookupswitch 21: default 413
+    //                   -2055565910: 188
+    //                   -1882565338: 199
+    //                   -1457535688: 210
+    //                   -1411842725: 221
+    //                   -894172689: 232
+    //                   -623122092: 242
+    //                   -508378822: 253
+    //                   -419626537: 263
+    //                   560567118: 274
+    //                   635195988: 285
+    //                   811063227: 296
+    //                   973717575: 307
+    //                   1221173700: 318
+    //                   1230699260: 328
+    //                   1245895525: 339
+    //                   1306468936: 350
+    //                   1584330438: 361
+    //                   1800494055: 372
+    //                   1826985398: 383
+    //                   1913648695: 393
+    //                   1984935277: 403;
+           goto _L1 _L2 _L3 _L4 _L5 _L6 _L7 _L8 _L9 _L10 _L11 _L12 _L13 _L14 _L15 _L16 _L17 _L18 _L19 _L20 _L21 _L22
+_L2:
+        "CGLIB$SET_THREAD_CALLBACKS([Lnet/sf/cglib/proxy/Callback;)V";
+        equals();
+        JVM INSTR ifeq 414;
+           goto _L23 _L24
+_L24:
+        break MISSING_BLOCK_LABEL_414;
+_L23:
+        return 10;
+_L3:
+        "CGLIB$equals$1(Ljava/lang/Object;)Z";
+        equals();
+        JVM INSTR ifeq 414;
+           goto _L25 _L26
+_L26:
+        break MISSING_BLOCK_LABEL_414;
+_L25:
+        return 19;
+_L4:
+        "CGLIB$STATICHOOK1()V";
+        equals();
+        JVM INSTR ifeq 414;
+           goto _L27 _L28
+_L28:
+        break MISSING_BLOCK_LABEL_414;
+_L27:
+        return 15;
+        
+//...省略部分代码
+
+    // 根据 index 直接定位执行方法
+    public Object invoke(int i, Object obj, Object aobj[])
+        throws InvocationTargetException
+    {
+        (Customer..EnhancerByCGLIB.._cls6ec9c1ce)obj;
+        i;
+        JVM INSTR tableswitch 0 20: default 311
+    //                   0 104
+    //                   1 119
+    //                   2 123
+    //                   3 135
+    //                   4 139
+    //                   5 149
+    //                   6 159
+    //                   7 181
+    //                   8 201
+    //                   9 206
+    //                   10 217
+    //                   11 228
+    //                   12 241
+    //                   13 245
+    //                   14 256
+    //                   15 266
+    //                   16 271
+    //                   17 276
+    //                   18 288
+    //                   19 292
+    //                   20 307;
+           goto _L1 _L2 _L3 _L4 _L5 _L6 _L7 _L8 _L9 _L10 _L11 _L12 _L13 _L14 _L15 _L16 _L17 _L18 _L19 _L20 _L21 _L22
+_L2:
+        aobj[0];
+        equals();
+        JVM INSTR new #138 <Class Boolean>;
+        JVM INSTR dup_x1 ;
+        JVM INSTR swap ;
+        Boolean();
+        return;
+_L3:
+        toString();
+        return;
+_L4:
+        hashCode();
+        JVM INSTR new #145 <Class Integer>;
+        JVM INSTR dup_x1 ;
+        JVM INSTR swap ;
+        Integer();
+        return;
+_L5:
+        clone();
+        return;
+_L6:
+        (Callback[])aobj[0];
+        newInstance();
+        return;
+_L7:
+        (Callback)aobj[0];
+        newInstance();
+        return;
+_L8:
+        (Class[])aobj[0];
+        (Object[])aobj[1];
+        (Callback[])aobj[2];
+        newInstance();
+        return;
+_L9:
+        ((Number)aobj[0]).intValue();
+        (Callback)aobj[1];
+        setCallback();
+        return null;
+_L10:
+        buyTickets();
+        return null;
+_L11:
+        Customer..EnhancerByCGLIB.._cls6ec9c1ce.CGLIB$SET_STATIC_CALLBACKS((Callback[])aobj[0]);
+        return null;
+_L12:
+        Customer..EnhancerByCGLIB.._cls6ec9c1ce.CGLIB$SET_THREAD_CALLBACKS((Callback[])aobj[0]);
+        return null;
+_L13:
+        ((Number)aobj[0]).intValue();
+        getCallback();
+        return;
+_L14:
+        getCallbacks();
+        return;
+_L15:
+        (Callback[])aobj[0];
+        setCallbacks();
+        return null;
+_L16:
+        return Customer..EnhancerByCGLIB.._cls6ec9c1ce.CGLIB$findMethodProxy((Signature)aobj[0]);
+_L17:
+        Customer..EnhancerByCGLIB.._cls6ec9c1ce.CGLIB$STATICHOOK1();
+        return null;
+_L18:
+        CGLIB$buyTickets$0();
+        return null;
+_L19:
+        CGLIB$hashCode$3();
+        JVM INSTR new #145 <Class Integer>;
+        JVM INSTR dup_x1 ;
+        JVM INSTR swap ;
+        Integer();
+        return;
+_L20:
+        CGLIB$clone$4();
+        return;
+_L21:
+        aobj[0];
+        CGLIB$equals$1();
+        JVM INSTR new #138 <Class Boolean>;
+        JVM INSTR dup_x1 ;
+        JVM INSTR swap ;
+        Boolean();
+        return;
+_L22:
+        CGLIB$toString$2();
+        return;
+        JVM INSTR new #133 <Class InvocationTargetException>;
+        JVM INSTR dup_x1 ;
+        JVM INSTR swap ;
+        InvocationTargetException();
+        throw ;
+_L1:
+        throw new IllegalArgumentException("Cannot find matching method/constructor");
+    }
+
+    public Object newInstance(int i, Object aobj[])
+        throws InvocationTargetException
+    {
+        JVM INSTR new #135 <Class Customer$$EnhancerByCGLIB$$6ec9c1ce>;
+        JVM INSTR dup ;
+        i;
+        JVM INSTR tableswitch 0 0: default 28
+    //                   0 24;
+           goto _L1 _L2
+_L2:
+        Customer..EnhancerByCGLIB.._cls6ec9c1ce();
+        return;
+        JVM INSTR new #133 <Class InvocationTargetException>;
+        JVM INSTR dup_x1 ;
+        JVM INSTR swap ;
+        InvocationTargetException();
+        throw ;
+_L1:
+        throw new IllegalArgumentException("Cannot find matching method/constructor");
+    }
+
+    public int getMaxIndex()
+    {
+        return 20;
+    }
+
+    public Customer$$EnhancerByCGLIB$$6ec9c1ce$$FastClassByCGLIB$$8a48b4bd(Class class1)
+    {
+        super(class1);
+    }
+}
+```
+
+需要注意的是，FastClass并不是跟代理类一起生成的， 而是在第一次执行 MethodProxy.invoke/invokeSuper 时生成的并放在了缓存中。MethodProxy.invoke/invokeSuper都调用了MethodProxy.init()，并优先从缓存获取，缓存中不存在时就生成并放入缓存。
 
 
-
-
-书写代理类, 编译成字节码文件, 并加载到内存中;
 
 ### DBRoute改版
 
+#### JDK动态代理版本
+
+下面我们使用JDK动态代理来对我们的数据源路由进行改造。
+
+```java
+package com.lthaoshao.pattern.proxy.dbroute.proxy;
+
+import com.lthaoshao.pattern.proxy.dbroute.DynamicDataSourceEntry;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+/**
+ * <p> JDK动态代理版本 </p>
+ *
+ * @author lijinghao
+ * @version : OrderServiceDynamicProxy.java, v 0.1 2019年08月01日 20:34:34 lijinghao Exp $
+ */
+public class OrderServiceDynamicProxyByJDK implements InvocationHandler {
+
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+    private Object target;
+
+    public Object getInstance(Object target) {
+        this.target = target;
+        Class<?> clazz = target.getClass();
+        return Proxy.newProxyInstance(clazz.getClassLoader(), clazz.getInterfaces(), this);
+    }
+
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        doBefore(args[0]);
+        String result = (String) method.invoke(target, args);
+        doAfter();
+        return result;
+    }
+
+    private void doAfter() {
+        System.out.println("Proxy after method");
+        DynamicDataSourceEntry.restore();
+        System.out.println("重置数据源到:" + DynamicDataSourceEntry.get());
+    }
+
+    private void doBefore(Object target) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        System.out.println("Proxy before method");
+
+        Date time = (Date) target.getClass().getMethod("getCreateTime").invoke(target);
+        // 现在在调用服务之前设置数据源
+        DynamicDataSourceEntry.set("DB_" + sdf.format(time));
+        System.out.println("自动分配数据源到:" + DynamicDataSourceEntry.get());
+    }
+
+}
+```
+
+测试类：
+
+```java
+package com.lthaoshao.pattern.proxy.dbroute;
+
+import com.lthaoshao.pattern.proxy.dbroute.proxy.OrderServiceDynamicProxyByJDK;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+/**
+ * <p> test </p>
+ *
+ * @author lthaoshao
+ * @version V1.0
+ * @date 2019/7/30 0:04
+ */
+public class DbRouteProxyTest {
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    public static void main(String[] args) {
+        Order order = new Order();
+        order.setId(System.currentTimeMillis());
+        order.setDesc("Iphone");
+        order.setAmount(8000000);
+
+        // order.setDate(new Date());
+        try {
+            order.setCreateTime(sdf.parse("2017-02-11"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        IOrderService orderService = new OrderServiceImpl();
+        // IOrderService service = new OrderServiceStaticProxy(orderService);
+        OrderServiceDynamicProxyByJDK orderProxy = new OrderServiceDynamicProxyByJDK();
+        IOrderService service = (IOrderService)orderProxy.getInstance(orderService);
+        String result = service.createOrder(order);
+        System.out.println(result);
+    }
+}
+```
+
+执行结果：
+
+```verilog
+Proxy before method
+自动分配数据源到:DB_2017
+OrderService调用createOrder完成创建订单
+完成订单插入操作
+Proxy after method
+重置数据源到:null
+完成创建订单
+
+Process finished with exit code 0
+```
+
+结果是OK的。
+
+#### CGLIB动态代理版本
+
+下面来使用CGLIB动态代理实现。
+
+```java
+package com.lthaoshao.pattern.proxy.dbroute.proxy;
+
+import com.lthaoshao.pattern.proxy.dbroute.DynamicDataSourceEntry;
+import net.sf.cglib.proxy.Enhancer;
+import net.sf.cglib.proxy.MethodInterceptor;
+import net.sf.cglib.proxy.MethodProxy;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+/**
+ * <p> 基于CGLIB动态代理 </p>
+ *
+ * @author lthaoshao
+ * @version V1.0
+ * @date 2019/8/10 9:30
+ */
+public class OrderServiceDynamicProxyByCglib implements MethodInterceptor {
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+    private Object target;
+    public Object getInstance(Object o) {
+        this.target = o;
+        Enhancer enhancer = new Enhancer();
+        enhancer.setSuperclass(o.getClass());
+        enhancer.setCallback(this);
+        return enhancer.create();
+    }
+
+    @Override
+    public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
+        before(args[0]);
+        Object o = proxy.invokeSuper(obj, args);
+        after();
+        return o;
+    }
+
+    private void after() {
+        System.out.println("CGLIB 动态代理 执行后操作");
+        DynamicDataSourceEntry.restore();
+        System.out.println("重置数据源到:" + DynamicDataSourceEntry.get());
+    }
+
+    private void before(Object target) {
+        System.out.println("CGLIB 动态代理 执行前操作");
+        Date time = null;
+        try {
+            time = (Date) target.getClass().getMethod("getCreateTime").invoke(target);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // 现在在调用服务之前设置数据源
+        DynamicDataSourceEntry.set("DB_" + sdf.format(time));
+        System.out.println("自动分配数据源到:" + DynamicDataSourceEntry.get());
+    }
+}
+```
+
+测试代码：
+
+```java
+package com.lthaoshao.pattern.proxy.dbroute;
+
+import com.lthaoshao.pattern.proxy.dbroute.proxy.OrderServiceDynamicProxyByCglib;
+import com.lthaoshao.pattern.proxy.dbroute.proxy.OrderServiceDynamicProxyByJDK;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+/**
+ * <p> test </p>
+ *
+ * @author lthaoshao
+ * @version V1.0
+ * @date 2019/7/30 0:04
+ */
+public class DbRouteProxyTest {
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    public static void main(String[] args) {
+        Order order = new Order();
+        order.setId(System.currentTimeMillis());
+        order.setDesc("Iphone");
+        order.setAmount(8000000);
+
+        // order.setDate(new Date());
+        try {
+            order.setCreateTime(sdf.parse("2017-02-11"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        IOrderService orderService = new OrderServiceImpl();
+        // IOrderService service = new OrderServiceStaticProxy(orderService);
+        // OrderServiceDynamicProxyByJDK orderProxy = new OrderServiceDynamicProxyByJDK();
+        OrderServiceDynamicProxyByCglib orderProxy = new OrderServiceDynamicProxyByCglib();
+        IOrderService service = (IOrderService)orderProxy.getInstance(orderService);
+        String result = service.createOrder(order);
+        System.out.println(result);
+    }
+}
+```
+
+执行结果：
+
+```verilog
+CGLIB 动态代理 执行前操作
+自动分配数据源到:DB_2017
+OrderService调用createOrder完成创建订单
+完成订单插入操作
+CGLIB 动态代理 执行后操作
+重置数据源到:null
+完成创建订单
+
+Process finished with exit code 0
+```
+
+结果同样是OK的。
+
+
+
 ### 总结
 
-保存代理类字节码文件, 并进行反编译查看内容;
+#### JDK和CGLIB动态代理对比
+
+1、JDK动态代理是实现类被代理对象的相同的接口，CGLIB是继承了被代理对象；
+
+2、JDK和CGLIB都是在运行时生成字节码，JDK是直接写字节码，CGLIB是采用了ASM框架写字节码，CGLIB代理的实现更加复杂，生成代理类的效率比JDK要低；
+
+3、JDK调用代理方法，是通过反射机制调用的，而CGLIB采用了FastClass机制，直接调用代理方法，也因此CGLIB的执行效率更高；
+
+#### Spring中的动态代理
+
+Spring中使用到设计模式的类的命名有个特点，就是以设计模式的名字开头或结尾。
+
+代理模式的应用，先看一下`org.springframework.aop.framework.ProxyFactoryBean，它的核心方法就是getObject()。
+
+```java
+@Override
+@Nullable
+public Object getObject() throws BeansException {
+    initializeAdvisorChain();
+    if (isSingleton()) {
+        return getSingletonInstance();
+    }
+    else {
+        if (this.targetName == null) {
+            logger.info("Using non-singleton proxies with singleton targets is often undesirable. " +
+                        "Enable prototype proxies by setting the 'targetName' property.");
+        }
+        return newPrototypeInstance();
+    }
+}
+```
+
+在getObject()方法中，主要的就是getSingletonInstance()和newPrototypeInstance()。
+
+在Spring中，如果不进行任何配置，默认的Bean都是单例的，如果修改Bean的scope为prototype，则每次都会创建一个新的原型对象。
+
+Spring 利用动态代理实现 AOP 有两个非常重要的类，一个是 JdkDynamicAopProxy 类 和 CglibAopProxy 类，来看一下类图：
+
+![Alt text](https://github.com/lthaoshao/design-patterns-example/blob/master/pattern-proxy/src/main/resources/AopProxy.png?raw=true "AOP")
+
+**Spring 中的代理选择原则** 
+
+1、当 Bean 有实现接口时，Spring 就会用 JDK 的动态代理 ；
+
+2、当 Bean 没有实现接口时，Spring 选择 CGLIB动态代理；
+
+3、Spring 可以通过配置强制使用 CGLib，只需在 Spring 的配置文件中加入如下代码：
+
+```xml
+<aop:aspectj-autoproxy proxy-target-class="true"/>
+```
+
+#### 静态代理和动态的本质区别
+
+1、静态代理类只能通过手动完成代理操作，如果被代理对象增加新的方法，代理类需要同步新增，违背了开闭原则；
+
+2、动态代理采用在运行时生成代理对象字节码的方式，取消了对被代理对象 扩展限制，遵循开闭原则；
+
+3、若动态代理要对目标类的增强逻辑扩展，结合策略模式，只需要新增策略类便可完成，无需修改代理类的代码；
+
+#### 代理模式的优缺点
+
+**优点：**
+
+1、代理模式能将被代理对象与真实调用的目标对象进行分离；
+
+2、一定程度上降低了系统的耦合性，扩展性好；
+
+3、可以起到保护目标对象的作用；
+
+4、可以对目标对象进行增强；
+
+**缺点：**
+
+1、代理模式会造成系统设计中类的个数增加；
+
+2、在客户端和目标对象之间增加一个代理类，会造成请求处理变慢，当然基本无感知；
+
+3、增加了系统的复杂度；

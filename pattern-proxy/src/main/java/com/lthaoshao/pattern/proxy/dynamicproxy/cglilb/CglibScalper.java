@@ -17,6 +17,7 @@ public class CglibScalper implements MethodInterceptor {
 
     public Object getInstance(Class<?> clazz){
         Enhancer enhancer = new Enhancer();
+        // 将被代理类作为要生成的类的父类
         enhancer.setSuperclass(clazz);
         enhancer.setCallback(this);
         return enhancer.create();
@@ -25,9 +26,7 @@ public class CglibScalper implements MethodInterceptor {
     @Override
     public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
         doBefore();
-
         Object obj = methodProxy.invokeSuper(o, objects);
-
         doAfter();
         return obj;
     }

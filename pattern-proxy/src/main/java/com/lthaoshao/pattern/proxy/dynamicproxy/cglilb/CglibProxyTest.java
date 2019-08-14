@@ -1,10 +1,9 @@
 package com.lthaoshao.pattern.proxy.dynamicproxy.cglilb;
 
-import com.lthaoshao.pattern.proxy.dynamicproxy.Customer;
 import net.sf.cglib.core.DebuggingClassWriter;
 
 /**
- * <p>  </p>
+ * <p> test </p>
  *
  * @author lthaoshao
  * @version V1.0
@@ -21,6 +20,5 @@ public class CglibProxyTest {
         CglibScalper scalper = new CglibScalper();
         Customer proxy = (Customer) scalper.getInstance(customer.getClass());
         proxy.buyTickets();
-
     }
 }

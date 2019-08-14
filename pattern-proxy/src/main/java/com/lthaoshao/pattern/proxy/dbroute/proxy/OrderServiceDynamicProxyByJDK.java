@@ -10,41 +10,34 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * <p>  </p>
+ * <p> JDK动态代理版本 </p>
  *
  * @author lijinghao
  * @version : OrderServiceDynamicProxy.java, v 0.1 2019年08月01日 20:34:34 lijinghao Exp $
  */
-public class OrderServiceDynamicProxy implements InvocationHandler {
+public class OrderServiceDynamicProxyByJDK implements InvocationHandler {
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
-
     private Object target;
 
     public Object getInstance(Object target) {
         this.target = target;
-
         Class<?> clazz = target.getClass();
         return Proxy.newProxyInstance(clazz.getClassLoader(), clazz.getInterfaces(), this);
     }
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-
         doBefore(args[0]);
-
         String result = (String) method.invoke(target, args);
-
         doAfter();
-
-        DynamicDataSourceEntry.restore();
-        System.out.println("重置数据源到:" + DynamicDataSourceEntry.get());
         return result;
     }
 
     private void doAfter() {
         System.out.println("Proxy after method");
-
+        DynamicDataSourceEntry.restore();
+        System.out.println("重置数据源到:" + DynamicDataSourceEntry.get());
     }
 
     private void doBefore(Object target) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
